@@ -1,0 +1,16 @@
+{
+  "name": "audiotap",
+  "owner": {
+    "name": "AudioTap"
+  },
+  "metadata": {
+    "description": "Tools for writing AudioTap plugins."
+  },
+  "plugins": [
+    {
+      "name": "audiotap-plugin-kit",
+      "source": "./plugins/audiotap-plugin-kit",
+      "description": "Describe a visualizer or audio effect and get a plugin that AudioTap picks up from its plugins folder."
+    }
+  ]
+}
