@@ -21,7 +21,9 @@ Planned hosts are not built yet. Follow the portability rules below and your sha
 ## What a visualizer is
 
 - **One file**, ISF 2.0, extension `.fs`. Optional: a vertex shader with the same base name and the extension `.vs`,
-  and the image files named in the header's `IMPORTED` section, all in the same folder as the `.fs`.
+  and the image files named in the header's `IMPORTED` section, all in the same folder as the `.fs`. `IMPORTED` paths
+  are plain file names in that folder: no folders, no `..`, no absolute paths.
+- **Limits:** the `.fs` file is at most 1 MB, with at most 16 `PASSES`, each at most 8192 × 8192 pixels.
 - **A generator.** It draws from audio, not from an input image. A shader with an `image` input named `inputImage`
   (an ISF filter) or an ISF transition is rejected.
 - **Name:** the file name without `.fs`, with spaces added before capital letters (`NebulaPulse.fs` shows as
@@ -130,7 +132,8 @@ With AudioTap installed, run:
 
 It reads the header, checks it against this profile, translates and compiles the shader, and draws a few frames from
 a test signal. It prints `OK` and the inputs it found, or the reason it failed, with the line number in your `.fs` for
-compile errors. It exits with status 0 on success. AudioTap doesn't need to be running.
+compile errors. Everything is printed to standard output. Exit status: `0` the shader is fine, `1` it failed (including
+a file that doesn't exist), `2` no file was given. AudioTap doesn't need to be running, and the check plays no sound.
 
 ## When a shader doesn't load
 
@@ -143,8 +146,13 @@ red dot and one of these reasons:
 | Unsupported input: … | Remove that input. See "Inputs AudioTap supplies" |
 | This is a filter, not a visualizer | Draw from `audioFFT` or `audio` instead of `inputImage` |
 | The shader didn't compile: line N, … | Fix line N of the `.fs`. Line numbers count from the top of the file, header included |
-| Duplicate name | Rename the file |
+| Duplicate name: "…" is already used by another visualizer | Rename the file |
 | Stopped: took too long to draw | Simplify the shader. Save the file again to retry |
+| The shader couldn't start: … | Usually a Mac without a suitable GPU; the message gives the detail |
+| The shader is too large (over 1 MB) | Shorten the file |
+| Too many passes (the limit is 16) | Use 16 `PASSES` or fewer |
+| A pass is too large (the limit is 8192 × 8192) | Lower that pass's `WIDTH`/`HEIGHT` |
+| Imported images must be in the same folder as the shader | Put the images next to the `.fs` and name them without folders |
 
 AudioTap stops a shader that takes more than 50 ms of GPU time per frame for 30 frames in a row, or that makes the
 GPU report an error. It then switches to its default visualizer.
