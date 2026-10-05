@@ -47,7 +47,7 @@ Planned hosts are not built yet. Follow the portability rules below and your sha
 | `float`, `long`, `bool`, `color`, `point2D`, `event` | A control the listener can change (see Controls) |
 | `image` | **Not supported**, except images listed in `IMPORTED`. A shader with another `image` input is rejected |
 
-Use at most one `audioFFT` and one `audio` input. Read them with `IMG_NORM_PIXEL` or `IMG_PIXEL`, as the ISF spec
+One `audioFFT` and one `audio` input is all you need; if you declare more, each gets the same data. Read them with `IMG_NORM_PIXEL` or `IMG_PIXEL`, as the ISF spec
 says.
 
 ### `audioFFT`: the spectrum
@@ -137,11 +137,13 @@ With AudioTap installed, run:
 It reads the header, checks it against this profile, translates and compiles the shader, and draws a few frames from
 a test signal. It prints `OK` and the inputs it found, or the reason it failed, with the line number in your `.fs` for
 compile errors. Everything is printed to standard output. Exit status: `0` the shader is fine, `1` it failed (including
-a file that doesn't exist), `2` no file was given. AudioTap doesn't need to be running, and the check plays no sound.
+a file that doesn't exist, or a file that isn't a `.fs` shader: "Only ISF shaders (.fs files) can be checked: …"), `2` no
+file was given. A shader that draws too slowly fails with "Stopped: took too long to draw. Save the file again to
+retry." AudioTap doesn't need to be running, and the check plays no sound.
 
 ## When a shader doesn't load
 
-**Visualizer ▾** lists every file in the plugins folder. Loaded files have a green dot; files that didn't load have a
+The **Plugins folder** section of the **Visualizer ▾** menu lists every file in the plugins folder. Loaded files have a green dot; files that didn't load have a
 red dot and one of these reasons:
 
 | Reason | What to do |
@@ -158,6 +160,7 @@ red dot and one of these reasons:
 | A pass is too large (the limit is 8192 × 8192) | Lower that pass's `WIDTH`/`HEIGHT` |
 | Imported images must be in the same folder as the shader | Put the images next to the `.fs` and name them without folders |
 | An imported image is too large (the limit is 32 MB and 8192 × 8192) | Use a smaller image |
+| The header isn't valid ISF JSON: an imported image couldn't be read | Each imported image must be an ordinary image file next to the `.fs` |
 | The header isn't valid ISF JSON: the file couldn't be read | The `.fs` must be an ordinary readable file, not a folder, pipe or device |
 
 AudioTap stops a shader that takes more than 50 ms of GPU time per frame for 30 frames in a row, or that makes the
