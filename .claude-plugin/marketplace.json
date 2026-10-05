@@ -10,7 +10,7 @@
     {
       "name": "audiotap-plugin-kit",
       "source": "./plugins/audiotap-plugin-kit",
-      "description": "Describe a visualizer or audio effect and get a plugin that AudioTap picks up from its plugins folder."
+      "description": "Describe a visualizer and get an ISF shader that AudioTap picks up from its plugins folder."
     }
   ]
 }
