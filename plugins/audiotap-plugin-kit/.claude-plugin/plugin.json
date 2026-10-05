@@ -1,0 +1,16 @@
+{
+  "name": "audiotap-plugin-kit",
+  "version": "0.1.0",
+  "description": "Describe a visualizer and get an ISF shader that AudioTap picks up from its plugins folder, no restart needed. Audio-effect plugins are coming.",
+  "author": {
+    "name": "AudioTap"
+  },
+  "license": "MIT",
+  "keywords": [
+    "audiotap",
+    "audiofly",
+    "isf",
+    "shader",
+    "visualizer"
+  ]
+}
