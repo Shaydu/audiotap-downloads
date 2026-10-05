@@ -8,7 +8,7 @@ AudioTap takes two kinds of plugin, each an existing open standard:
 | The person wants | You make | Instructions | Contract |
 | --- | --- | --- | --- |
 | A visualizer: a picture that moves with the music | An **ISF 2.0 shader** (`.fs` file) | [write-visualizer](plugins/audiotap-plugin-kit/skills/write-visualizer/SKILL.md) | [ISF host profile](plugins/audiotap-plugin-kit/skills/write-visualizer/isf-host-profile.md) |
-| An audio effect: something that changes the sound | A **CLAP** audio effect (`.clap`) | Coming soon | Coming soon |
+| An audio effect: something that changes the sound | A **CLAP** audio effect (`.clap`, plain C) | [write-dsp-plugin](plugins/audiotap-plugin-kit/skills/write-dsp-plugin/SKILL.md) | [CLAP host profile](plugins/audiotap-plugin-kit/skills/write-dsp-plugin/clap-host-profile.md) |
 
 ## How to work
 
@@ -16,9 +16,12 @@ AudioTap takes two kinds of plugin, each an existing open standard:
    Claude Code, but they are plain Markdown and apply to any agent.
 2. Treat the host profile as the contract. Where the general standard (ISF or CLAP) allows something the profile
    doesn't, the profile wins.
-3. Start from the example next to the instructions; it is known to load in AudioTap.
-4. Check your plugin with the tool the instructions name before you install it, and fix everything it reports.
-5. Install the plugin into the folder the profile names. AudioTap notices new plugins while it runs.
+3. Start from the example next to the instructions (`LevelBars.fs` for visualizers, `examples/stereo-gain/` for audio
+   effects); it is known to load in AudioTap.
+4. Check your plugin with the tool the instructions name before you install it (`--check-plugin` for a visualizer,
+   `clap-validator` for an audio effect), and fix everything it reports.
+5. Install the plugin into the folder the profile names. AudioTap notices new plugins while it runs. A plugin you
+   built and signed yourself (ad-hoc) loads only when the person turns on **Allow plugins I built myself**; tell them.
 6. Finish with the short checklist the instructions describe, so the person knows where to find the plugin and what
    each control does.
 

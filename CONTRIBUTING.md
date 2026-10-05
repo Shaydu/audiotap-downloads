@@ -7,7 +7,9 @@ You can write AudioTap plugins without access to AudioTap's source code:
 - **Visualizers** are [ISF 2.0](https://github.com/mrRay/ISF_Spec) shaders. Start with the
   [ISF host profile](plugins/audiotap-plugin-kit/skills/write-visualizer/isf-host-profile.md) and the
   [LevelBars example](plugins/audiotap-plugin-kit/skills/write-visualizer/examples/LevelBars.fs).
-- **Audio effects** will be [CLAP](https://github.com/free-audio/clap) plugins. Their host profile is coming soon.
+- **Audio effects** are [CLAP](https://github.com/free-audio/clap) plugins. Start with the
+  [CLAP host profile](plugins/audiotap-plugin-kit/skills/write-dsp-plugin/clap-host-profile.md) and the
+  [stereo-gain example](plugins/audiotap-plugin-kit/skills/write-dsp-plugin/examples/stereo-gain/) (plain C, CMake).
 
 The easiest way is to describe what you want to a coding agent. With Claude Code:
 
@@ -21,7 +23,8 @@ Other agents: point them at [AGENTS.md](AGENTS.md).
 ## Sharing your plugin
 
 Your plugins are yours. Keep them in your own repository and share them however you like. Anyone can install a
-shader by dropping the `.fs` file into AudioTap's plugins folder.
+shader by dropping the `.fs` file into AudioTap's plugins folder, and an audio effect by dropping its `.clap` bundle into
+`~/Library/Audio/Plug-Ins/CLAP/`.
 
 There is no plugin gallery yet.
 
