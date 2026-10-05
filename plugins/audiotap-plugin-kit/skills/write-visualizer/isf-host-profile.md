@@ -22,7 +22,7 @@ Planned hosts are not built yet. Follow the portability rules below and your sha
 
 - **One file**, ISF 2.0, extension `.fs`. Optional: a vertex shader with the same base name and the extension `.vs`,
   and the image files named in the header's `IMPORTED` section, all in the same folder as the `.fs`. `IMPORTED` paths
-  are plain file names in that folder: no folders, no `..`, no absolute paths.
+  must stay inside that folder: no `..` and no absolute paths (subfolders are fine).
 - **Limits:** the `.fs` file is at most 1 MB, with at most 16 `PASSES`, each at most 8192 × 8192 pixels. A pass's
   `WIDTH`/`HEIGHT` may be a number or an expression of up to 256 characters using numbers, `$WIDTH`, `$HEIGHT`, the
   `$NAME` of your own `float`, `long` or `bool` inputs, `+ - * /`, parentheses and `min max floor ceil round abs pow
@@ -160,8 +160,8 @@ red dot and one of these reasons:
 | A pass is too large (the limit is 8192 × 8192) | Lower that pass's `WIDTH`/`HEIGHT` |
 | Imported images must be in the same folder as the shader | Put the images next to the `.fs` and name them without folders |
 | An imported image is too large (the limit is 32 MB and 8192 × 8192) | Use a smaller image |
-| The header isn't valid ISF JSON: an imported image couldn't be read | Each imported image must be an ordinary image file next to the `.fs` |
-| The header isn't valid ISF JSON: the file couldn't be read | The `.fs` must be an ordinary readable file, not a folder, pipe or device |
+| An imported image couldn't be read. | Each imported image must be an ordinary image file in the shader's folder |
+| The file couldn't be read. | The `.fs` must be an ordinary readable file, not a folder, pipe or device |
 
 AudioTap stops a shader that takes more than 50 ms of GPU time per frame for 30 frames in a row, or that makes the
 GPU report an error. It then switches to its default visualizer.
